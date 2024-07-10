@@ -1,5 +1,5 @@
-import 'package:country_api_task/src/providers/countries_data_provider.dart';
-import 'package:country_api_task/src/providers/outer_page_view_index_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/outer_page_view_index_provider.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/annotated_region.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/home_indicator_widget.dart';
 import 'package:country_api_task/src/views/widgets/other_widgets/full_country_details_widget.dart';

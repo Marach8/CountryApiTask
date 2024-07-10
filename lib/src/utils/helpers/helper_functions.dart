@@ -1,8 +1,5 @@
-import 'package:country_api_task/src/providers/number_of_checkbox_ticks_provider.dart';
-import 'package:country_api_task/src/providers/selected_check_box_provider.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AgroMallTaskHelperFunctions{
   const AgroMallTaskHelperFunctions._();
@@ -43,20 +40,6 @@ class AgroMallTaskHelperFunctions{
   }
 
 
-  static void increaseOrDecreaseNumberOfCheckBoxTicks({
-    required bool valueToCheck,
-    required BuildContext context
-  }){
-    final ref = ProviderScope.containerOf(context);
-    if(valueToCheck){
-      ref.read(numberOfCheckboxTicksProvider.notifier).state++;
-    }
-    else{
-      ref.read(numberOfCheckboxTicksProvider.notifier).state--;
-    }
-  }
-
-
   static bool checkForCommonElementInTwoLists({
     required List<String> list1,
     required List<String> list2
@@ -69,23 +52,6 @@ class AgroMallTaskHelperFunctions{
       }
     }
     return commonElementExists;
-  }
-
-
-  static void resetSelectedCheckboxes({
-    required List<String> continents,
-    required List<String> timezones,
-    required BuildContext context
-  }){
-    final ref = ProviderScope.containerOf(context);
-
-    for(var continent in continents){
-      ref.read(checkBoxIsSelectedProvider(continent).notifier).state = false;
-    }
-
-    for(var timezone in timezones){
-      ref.read(checkBoxIsSelectedProvider(timezone).notifier).state = false;
-    }
   }
 
 

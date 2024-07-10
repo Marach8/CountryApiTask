@@ -1,17 +1,23 @@
 import 'package:country_api_task/src/models/country_data_state_model.dart';
-import 'package:country_api_task/src/notifiers/country_data_state.dart';
+import 'package:country_api_task/src/riverpod_state_management/notifiers/country_data_state.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/expansion_tile_state_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/number_of_checkbox_ticks_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/selected_check_box_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/services/api_service.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/utils/helpers/helper_functions.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>{
-  AgroMallTaskDataStateNotifier(): super(AgroMallTaskDataState.isLoading());
+  final Ref ref;
+
+  AgroMallTaskDataStateNotifier({required this.ref}): super(AgroMallTaskDataState.isLoading());
 
   List<AgroMallTaskCountryModel> _cachedCountryModels = [];
-  
-  final Map<String, Map<String, bool>> _statusOfCheckedBoxes = {};
+
 
   Future<void> fetchCountriesData() async{
     try{
@@ -28,59 +34,72 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
   }
 
 
-  // Map<String, bool>? getExpansionTileCheckBoxesData(String titleOfExpansionTile)
-  //   => _filterCheckBoxesStatus[titleOfExpansionTile];
+  void changeToDarkMode() => ref.read(themeModeProvider.notifier).state = ThemeMode.dark;
 
-  void showSelectedFilterResults(){
-    state = state = AgroMallTaskDataState.isLoading();
 
-    final continentTileMap = _statusOfCheckedBoxes[AgroMallTaskStrings.continent];
-    final timezoneTileMap = _statusOfCheckedBoxes[AgroMallTaskStrings.continent];
+  void changeToLightMode() => ref.read(themeModeProvider.notifier).state = ThemeMode.light;
 
-    //get all the selected continents in the Continent Expansion Tile
-    final listOfSelectedContinents = continentTileMap?.keys.where(
-      (key) => continentTileMap[key] == true
+
+  void showSelectedFilterResults(BuildContext context){
+    //Hide the snackbar, react to the closure of the expansion tiles,
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ref.read(expansionTileIsExpandedProvider(AgroMallTaskStrings.continent).notifier).state = false;
+    ref.read(expansionTileIsExpandedProvider(AgroMallTaskStrings.timezone).notifier).state = false;
+
+    //get all the continents and timezones and start loading
+    final listOfContinents = getContinents();
+    final listOfTimezones = getTimezones();
+
+    state = AgroMallTaskDataState.isLoading();
+
+    //get all the checked continent and timezone tiles
+    final listOfCheckedContinentTiles = listOfContinents.where(
+      (continent) => ref.read(checkBoxIsSelectedProvider(continent).notifier).state == true
     ).toList();
 
-    //get all the selected timezones in the Timezone Expansion Tile
-    final listOfSelectedTimezones = timezoneTileMap?.keys.where(
-      (key) => timezoneTileMap[key] == true
+    final listOfCheckedTimezoneTiles = listOfTimezones.where(
+      (timezone) => ref.read(checkBoxIsSelectedProvider(timezone).notifier).state == true
     ).toList();
 
+    //get all the countries that match either the checked continent tiles(if any) or timezone tiles(if any)
     final matchingCountryModels = _cachedCountryModels.where(
       (countryModel){
         final continent = countryModel.continent;
         final listOfTimezones = countryModel.timezones.split(AgroMallTaskStrings.comma);
+
         final timezoneIsInSelectedTimeZones = AgroMallTaskHelperFunctions.checkForCommonElementInTwoLists(
-          list1: listOfSelectedTimezones ?? [], 
+          list1: listOfCheckedTimezoneTiles, 
           list2: listOfTimezones
         );
 
-        final continentIsInSelectedContinents = listOfSelectedContinents?.contains(continent);
+        final continentIsInSelectedContinents = listOfCheckedContinentTiles.contains(continent);
 
-        return continentIsInSelectedContinents ?? false || timezoneIsInSelectedTimeZones;
+        return continentIsInSelectedContinents || timezoneIsInSelectedTimeZones;
       }
     ).toList();
 
+    //inject this matching countries into the state
     state = AgroMallTaskDataState.hasData(data: matchingCountryModels);
+
+    //ensure the checked boxes are unchecked after the process
+    unselectAllCheckboxes();
   }
 
 
-  void setCheckboxTileValue({
-    required String titleOfExpansionTile,
-    required String titleOfCheckBoxTile,
-    required bool valueToBeSet
-  }) {
-    if(_statusOfCheckedBoxes[titleOfExpansionTile] != null){
-      _statusOfCheckedBoxes[titleOfExpansionTile]?[titleOfCheckBoxTile] = valueToBeSet;
-      
+  void unselectAllCheckboxes(){
+    final continents = getContinents();
+    final timezones = getTimezones();
+    ref.read(numberOfCheckboxTicksProvider.notifier).state = 0;
+
+    //reset the state of all checkboxes to their unselected state;
+    for(var continent in continents){
+      ref.read(checkBoxIsSelectedProvider(continent).notifier).state = false;
     }
-    else{
-      final newCheckboxData = {titleOfCheckBoxTile: valueToBeSet};
-      _statusOfCheckedBoxes.putIfAbsent(titleOfExpansionTile, () => newCheckboxData);
+
+    for(var timezone in timezones){
+      ref.read(checkBoxIsSelectedProvider(timezone).notifier).state = false;
     }
-    
-  } 
+  }
 
 
   void filterCountriesBySearchKey(String searchKey){
@@ -139,6 +158,20 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
     return listOfContinents;
   }
   
+
+  void onCheckBoxTapped({
+    required String checkedTile,
+    required bool? currentValue
+  }){
+    if(currentValue ?? false){
+      ref.read(numberOfCheckboxTicksProvider.notifier).state++;
+    }
+    else{
+      ref.read(numberOfCheckboxTicksProvider.notifier).state--;
+    }
+    ref.read(checkBoxIsSelectedProvider(checkedTile).notifier).state = currentValue ?? false;
+  }
+
 
   List<String> getTimezones(){
     List<String> listOfTimezones = [];

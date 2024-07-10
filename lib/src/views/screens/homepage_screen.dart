@@ -1,5 +1,6 @@
-import 'package:country_api_task/src/providers/expansion_tile_state_provider.dart';
-import 'package:country_api_task/src/providers/theme_mode_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/expansion_tile_state_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/utils/dialogs/snackbar_dialog.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/annotated_region.dart';
@@ -43,11 +44,11 @@ class AgroMallTaskHomepageScreen extends StatelessWidget {
                 return Container(
                   padding: const EdgeInsets.only(right: 20),
                   child: inDarkMode ? GestureDetector(
-                    onTap: () => themeSelectorRef.read(themeModeProvider.notifier).state = ThemeMode.light,
+                    onTap: () => themeSelectorRef.read(countriesDataStateProvider.notifier).changeToLightMode(),
                     child: const AgroMallTaskAssetSvgDisplayWidget(svgPath: AgroMallTaskStrings.svgHalfMoon),
                   ) :
                   IconButton(
-                    onPressed: () => themeSelectorRef.read(themeModeProvider.notifier).state = ThemeMode.dark,
+                    onPressed: () => themeSelectorRef.read(countriesDataStateProvider.notifier).changeToLightMode(),
                     icon: const Icon(Icons.wb_sunny_outlined)
                   )
                 );

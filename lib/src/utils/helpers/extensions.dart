@@ -38,6 +38,18 @@ extension CheckList<T> on List<T>{
 }
 
 
+// extension ResetBooleanValues<T, S> on Map<T, Map<T, bool>>{
+//   void resetAllTrueValuesToFalse(){
+//     for(var map in values){
+//       for(bool status in map.values){
+//         if(status){
+//           status = false;
+//         }
+//       }
+//     }
+//   }
+// }
+
 extension CapitalizeAWord on String{
   String get capitalize => this[0].toUpperCase() + substring(1).toLowerCase();
 }

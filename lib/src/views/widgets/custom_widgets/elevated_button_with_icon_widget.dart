@@ -1,4 +1,4 @@
-import 'package:country_api_task/src/providers/countries_data_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

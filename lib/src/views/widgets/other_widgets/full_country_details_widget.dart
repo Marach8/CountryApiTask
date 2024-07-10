@@ -1,4 +1,4 @@
-import 'package:country_api_task/src/notifiers/country_data_state.dart';
+import 'package:country_api_task/src/riverpod_state_management/notifiers/country_data_state.dart';
 import 'package:country_api_task/src/utils/constants/font_sizes.dart';
 import 'package:country_api_task/src/utils/constants/font_weights.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';

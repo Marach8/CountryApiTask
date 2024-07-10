@@ -1,4 +1,4 @@
-import 'package:country_api_task/src/providers/theme_mode_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/utils/themes/app_theme.dart';
 import 'package:country_api_task/src/views/screens/homepage_screen.dart';
 import 'package:flutter/material.dart';

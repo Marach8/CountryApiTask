@@ -1,5 +1,5 @@
-import 'package:country_api_task/src/providers/countries_data_provider.dart';
-import 'package:country_api_task/src/providers/theme_mode_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/utils/constants/colors.dart';
 import 'package:country_api_task/src/utils/constants/font_weights.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';

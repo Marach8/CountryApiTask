@@ -1,8 +1,7 @@
-import 'package:country_api_task/src/providers/countries_data_provider.dart';
-import 'package:country_api_task/src/providers/expansion_tile_state_provider.dart';
-import 'package:country_api_task/src/providers/selected_check_box_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/expansion_tile_state_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/selected_check_box_provider.dart';
 import 'package:country_api_task/src/utils/constants/font_weights.dart';
-import 'package:country_api_task/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -52,6 +51,7 @@ class AgroMallTaskExpansionTileWidget extends StatelessWidget {
         (childTileTitle) => Consumer(
           builder: (_, checkBoxRef, __) {
             final isSelected = checkBoxRef.watch(checkBoxIsSelectedProvider(childTileTitle));
+            
             return CheckboxListTile.adaptive(
               contentPadding: EdgeInsets.zero,
               title: Text(
@@ -59,18 +59,11 @@ class AgroMallTaskExpansionTileWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               value: isSelected,
-              onChanged: (value) {
-                AgroMallTaskHelperFunctions.increaseOrDecreaseNumberOfCheckBoxTicks(
-                  valueToCheck: value ?? false, 
-                  context: context
-                );
-                checkBoxRef.read(checkBoxIsSelectedProvider(childTileTitle).notifier).state = value ?? false;
-                checkBoxRef.read(countriesDataStateProvider.notifier).setCheckboxTileValue(
-                  titleOfExpansionTile: titleOfExpansionTile,
-                  titleOfCheckBoxTile: childTileTitle,
-                  valueToBeSet: value ?? false
-                );
-              }
+              onChanged: (value) =>
+                checkBoxRef.read(countriesDataStateProvider.notifier).onCheckBoxTapped(
+                  checkedTile: childTileTitle,
+                  currentValue: value
+                )
             );
           }
         )
