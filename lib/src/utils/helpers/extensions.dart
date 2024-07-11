@@ -33,22 +33,15 @@ extension CheckList<T> on List<T>{
     if(isEmpty){
       return AgroMallTaskStrings.dataNotAvailable;
     }
-    return join(', ');
+    return join(',');
   }
 }
 
 
-// extension ResetBooleanValues<T, S> on Map<T, Map<T, bool>>{
-//   void resetAllTrueValuesToFalse(){
-//     for(var map in values){
-//       for(bool status in map.values){
-//         if(status){
-//           status = false;
-//         }
-//       }
-//     }
-//   }
-// }
+extension RemoveFirstAndLastCharactersFromAString on String{
+  String get removeFirstAndLastCharacters => substring(1, length);
+}
+
 
 extension CapitalizeAWord on String{
   String get capitalize => this[0].toUpperCase() + substring(1).toLowerCase();

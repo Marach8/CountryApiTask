@@ -42,6 +42,7 @@ dependencies:
   iconsax: ^0.0.8
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.1.0
+  readmore: ^3.0.0
 
 dev_dependencies:
   flutter_test:

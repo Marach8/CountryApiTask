@@ -1,4 +1,4 @@
-import 'package:country_api_task/src/riverpod_state_management/notifiers/country_data_state.dart';
+import 'package:country_api_task/src/models/country_data_model.dart';
 import 'package:country_api_task/src/utils/constants/font_sizes.dart';
 import 'package:country_api_task/src/utils/constants/font_weights.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
@@ -10,6 +10,7 @@ import 'package:country_api_task/src/views/widgets/other_widgets/inner_page_indi
 import 'package:country_api_task/src/views/widgets/other_widgets/row_of_next_and_previous_page_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:readmore/readmore.dart';
 
 class AgroMallTaskFullCountryDetailsWidget extends StatelessWidget {
   final AgroMallTaskCountryModel countryModel;
@@ -58,7 +59,7 @@ class AgroMallTaskFullCountryDetailsWidget extends StatelessWidget {
                     ),
                   ),
 
-                  Center(child: AgroMallRowWithTowCircularButtonsWidget(country: countryModel.name)),
+                  Center(child: AgroMallRowWithTwoCircularButtonsWidget(country: countryModel.name)),
 
                   const Positioned(
                     bottom: 20,
@@ -87,11 +88,14 @@ class AgroMallTaskFullCountryDetailsWidget extends StatelessWidget {
                             AgroMallTaskStrings.colon,
                             style: Theme.of(context).textTheme.headlineMedium
                           ),
+
                           const Gap(5),
+
                           Expanded(
-                            child: Text(
-                              maxLines: null,
+                            child: ReadMoreText(
                               mapEntry.value,
+                              trimMode: TrimMode.Length,
+                              trimLength: 8,
                               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                 fontSize: AgroMallTaskFontSizes.size16,
                                 fontWeight: AgroMallTaskFontWeights.regular

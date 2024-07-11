@@ -48,7 +48,7 @@ class AgroMallTaskHomepageScreen extends StatelessWidget {
                     child: const AgroMallTaskAssetSvgDisplayWidget(svgPath: AgroMallTaskStrings.svgHalfMoon),
                   ) :
                   IconButton(
-                    onPressed: () => themeSelectorRef.read(countriesDataStateProvider.notifier).changeToLightMode(),
+                    onPressed: () => themeSelectorRef.read(countriesDataStateProvider.notifier).changeToDarkMode(),
                     icon: const Icon(Icons.wb_sunny_outlined)
                   )
                 );

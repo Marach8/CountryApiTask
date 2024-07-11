@@ -40,6 +40,8 @@ class _AgroMallTaskFullCountryDetailScreenState extends State<AgroMallTaskFullCo
 
   @override
   Widget build(BuildContext context) {
+    final ref = ProviderScope.containerOf(context, listen: false);
+    final sortedCountryModels = ref.read(countriesDataStateProvider.notifier).getSortedListOfCountryModels();
 
     return AgroMallTaskAnnotatedRegionWidget(
       child: Scaffold(
@@ -47,7 +49,7 @@ class _AgroMallTaskFullCountryDetailScreenState extends State<AgroMallTaskFullCo
           centerTitle: true,
           title: Consumer(
             builder: (_, ref, __) {
-              final sortedCountryModels = ref.watch(countriesDataStateProvider.notifier).getSortedListOfCountryModels();
+              final sortedCountryModels = ref.read(countriesDataStateProvider.notifier).getSortedListOfCountryModels();
               final currentIndex = ref.watch(outerPageIndexProvider);
               final nameOfCountry = sortedCountryModels.elementAt(currentIndex).name;
               
@@ -56,19 +58,13 @@ class _AgroMallTaskFullCountryDetailScreenState extends State<AgroMallTaskFullCo
           ),
         ),
       
-        body: Consumer(
-          builder: (_, ref, __) {
-            final sortedCountryModels = ref.watch(countriesDataStateProvider.notifier).getSortedListOfCountryModels();
-      
-            return PageView.builder(
-              controller: _pageController,
-              itemCount: sortedCountryModels.length,
-              onPageChanged: (index) => ref.read(outerPageIndexProvider.notifier).state = index,
-              itemBuilder: (_, pageIndex){
-                final countryModel = sortedCountryModels.elementAt(pageIndex);
-                return AgroMallTaskFullCountryDetailsWidget(countryModel: countryModel);
-              }
-            );
+        body: PageView.builder(
+          controller: _pageController,
+          itemCount: sortedCountryModels.length,
+          onPageChanged: (index) => ref.read(countriesDataStateProvider.notifier).updateOuterPageViewIndex(index),
+          itemBuilder: (_, pageIndex){
+            final countryModel = sortedCountryModels.elementAt(pageIndex);
+            return AgroMallTaskFullCountryDetailsWidget(countryModel: countryModel);
           }
         ),
         bottomNavigationBar: const AgroMallTaskHomeIndicatorWidget(),

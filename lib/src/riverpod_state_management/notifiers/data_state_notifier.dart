@@ -1,7 +1,9 @@
 import 'package:country_api_task/src/models/country_data_state_model.dart';
-import 'package:country_api_task/src/riverpod_state_management/notifiers/country_data_state.dart';
+import 'package:country_api_task/src/models/country_data_model.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/expansion_tile_state_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_controller_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/number_of_checkbox_ticks_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/outer_page_view_index_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/selected_check_box_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/services/api_service.dart';
@@ -137,6 +139,28 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
     );
 
     return copyOfData;
+  }
+
+
+  void updateOuterPageViewIndex(int currentIndex)
+    => ref.read(outerPageIndexProvider.notifier).state = currentIndex;
+
+
+  void goToPreviousInnerPage(){
+    final pageController = ref.read(innerPageControllerProvider);
+    pageController.previousPage(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease
+    );
+  }
+
+
+  void goToNextInnerPage(){
+    final pageController = ref.read(innerPageControllerProvider);
+    pageController.nextPage(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease
+    );
   }
 
 

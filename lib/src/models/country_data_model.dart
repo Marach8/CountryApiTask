@@ -91,7 +91,7 @@ class AgroMallTaskCountryModel{
     final coatOfArms = fetchedCoatOfArms.checkIfStringIsEmptyOrNull();
 
     final fetchedCarSign = json[AgroMallTaskStrings.car][AgroMallTaskStrings.carSigns];
-    final carSign = fetchedCarSign.toString();
+    final carSign = (fetchedCarSign as List).first;
 
     final fetchedPostalCodeFormat = json[AgroMallTaskStrings.postalCodeFormat].toString();
     final postalCodeFormat = fetchedPostalCodeFormat.checkIfStringIsEmptyOrNull();

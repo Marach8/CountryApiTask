@@ -19,9 +19,7 @@ class AgroMallTaskCountryFlagDisplayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8)
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
       height: height,
       width: width,
       child: SvgPicture.network(

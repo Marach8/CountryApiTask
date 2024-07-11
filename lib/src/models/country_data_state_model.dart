@@ -1,4 +1,4 @@
-import 'package:country_api_task/src/riverpod_state_management/notifiers/country_data_state.dart';
+import 'package:country_api_task/src/models/country_data_model.dart';
 
 class AgroMallTaskDataState {
   final bool isLoading;

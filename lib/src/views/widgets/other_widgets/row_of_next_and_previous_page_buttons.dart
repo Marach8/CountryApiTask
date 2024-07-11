@@ -1,13 +1,14 @@
+import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_view_index_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_controller_provider.dart';
 import 'package:country_api_task/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AgroMallRowWithTowCircularButtonsWidget extends ConsumerWidget {
+class AgroMallRowWithTwoCircularButtonsWidget extends ConsumerWidget {
   final String country;
   
-  const AgroMallRowWithTowCircularButtonsWidget({
+  const AgroMallRowWithTwoCircularButtonsWidget({
     super.key,
     required this.country
   });
@@ -25,13 +26,7 @@ class AgroMallRowWithTowCircularButtonsWidget extends ConsumerWidget {
           Visibility(
             visible: innerPageIndex != 0,
             child: GestureDetector(
-              onTap: () {
-                final pageController = ref.read(innerPageControllerProvider.notifier).state;
-                pageController.previousPage(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.ease
-                );
-              },
+              onTap: () => ref.read(countriesDataStateProvider.notifier).goToPreviousInnerPage(),
                   
               child: Container(
                 alignment: Alignment.center,
@@ -52,13 +47,7 @@ class AgroMallRowWithTowCircularButtonsWidget extends ConsumerWidget {
           Visibility(
             visible: innerPageIndex != 2,
             child: GestureDetector(
-              onTap: () {
-                final pageController = ref.read(innerPageControllerProvider.notifier).state;
-                pageController.nextPage(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.ease
-                );
-              },
+              onTap: () => ref.read(countriesDataStateProvider.notifier).goToNextInnerPage(),
                   
               child: Container(
                 alignment: Alignment.center,
