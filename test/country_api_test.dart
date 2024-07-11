@@ -17,7 +17,7 @@ void main(){
     testWidget = createWidgetForTesting(testWidget: const AgroMallTaskAnnotatedRegionWidget(child: SizedBox()));
   });
   group(
-    'testing widgets in the application',
+    'testing widgets in the homescreen',
     (){
       testWidgets(
         'renders the annotated region widget',

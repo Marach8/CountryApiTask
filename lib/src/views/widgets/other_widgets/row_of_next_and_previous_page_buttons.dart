@@ -1,6 +1,5 @@
 import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_view_index_provider.dart';
-import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_controller_provider.dart';
 import 'package:country_api_task/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

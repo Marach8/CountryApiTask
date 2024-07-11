@@ -53,8 +53,7 @@ class AgroMallTaskHomepageScreen extends StatelessWidget {
                   )
                 );
               }
-            ),
-            
+            ),    
           ],
         ),
       
@@ -83,9 +82,7 @@ class AgroMallTaskHomepageScreen extends StatelessWidget {
               ),
           
               const Gap(20),
-              const Expanded(
-                child: AgroMallTaskHomeWidget()
-              )
+              const Expanded(child: AgroMallTaskHomeWidget())
             ],
           ),
         ),

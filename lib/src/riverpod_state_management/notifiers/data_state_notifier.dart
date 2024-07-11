@@ -128,7 +128,12 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
         state = AgroMallTaskDataState.hasData(data: _cachedCountryModels);
       }
     }
-    
+
+    else{
+      if(_cachedCountryModels.isNotEmpty){
+        state = AgroMallTaskDataState.hasData(data: _cachedCountryModels);
+      }
+    }
   }
 
 
