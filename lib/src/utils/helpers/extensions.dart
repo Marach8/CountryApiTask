@@ -39,7 +39,7 @@ extension CheckList<T> on List<T>{
 
 
 extension RemoveFirstAndLastCharactersFromAString on String{
-  String get removeFirstAndLastCharacters => substring(1, length);
+  String get removeFirstAndLastCharacters => substring(1, length - 1);
 }
 
 

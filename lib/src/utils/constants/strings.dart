@@ -72,4 +72,5 @@ class AgroMallTaskStrings{
   static const couldNotLoadImage = 'Could not load Image!';
   static const noMatchesFound = 'No matches found!';
   static const couldNotFetchData = 'Could not fetch data';
+  static const showLess = ' show less';
 }

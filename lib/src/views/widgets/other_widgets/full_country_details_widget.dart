@@ -95,6 +95,7 @@ class AgroMallTaskFullCountryDetailsWidget extends StatelessWidget {
                             child: ReadMoreText(
                               mapEntry.value,
                               trimMode: TrimMode.Length,
+                              trimExpandedText: AgroMallTaskStrings.showLess,
                               trimLength: 8,
                               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                 fontSize: AgroMallTaskFontSizes.size16,
