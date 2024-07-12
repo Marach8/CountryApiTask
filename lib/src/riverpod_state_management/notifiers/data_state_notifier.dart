@@ -12,7 +12,6 @@ import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/utils/helpers/helper_functions.dart';
 import 'package:country_api_task/src/views/screens/full_country_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 

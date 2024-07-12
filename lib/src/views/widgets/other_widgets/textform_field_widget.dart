@@ -1,5 +1,6 @@
 import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/snack_bar_is_mounted_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/text_field_controller_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/utils/constants/colors.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
@@ -12,10 +13,12 @@ class AgroMallTaskTextFormField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentTheme = ref.watch(themeModeProvider);
+    final controller = ref.watch(textfieldControllerProvider);
     final inDarkMode = currentTheme == ThemeMode.dark;
     final snackBarIsMounted = ref.watch(snackBarIsMountedProvider);
 
     return TextFormField(
+      controller : controller,
       enabled: !snackBarIsMounted, 
       cursorColor: inDarkMode ? AgroMallTaskColors.lightThemeBgColor : AgroMallTaskColors.lightThemeBlackColor,
       onChanged: (value) => ref.read(countriesDataStateProvider.notifier).filterCountriesBySearchKey(value),
