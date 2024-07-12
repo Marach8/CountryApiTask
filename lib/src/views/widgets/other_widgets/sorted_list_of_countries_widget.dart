@@ -1,8 +1,11 @@
 import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/outer_page_view_index_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/textfield_search_string_provider.dart';
+import 'package:country_api_task/src/utils/constants/colors.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/views/screens/full_country_detail_screen.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/country_flag_display_widget.dart';
+import 'package:country_api_task/src/views/widgets/custom_widgets/home_screen_country_listtile_title_widget.dart';
 import 'package:country_api_task/src/views/widgets/other_widgets/home_screen_on_network_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,25 +58,13 @@ class AgroMallTaskHomeWidget extends ConsumerWidget {
 
             ...generalMap[mapKey]!.map(
               (listEntry) => ListTile(
-                onTap: () {
-                  final sortedListOfCountryModels = ref.read(countriesDataStateProvider.notifier).getSortedListOfCountryModels();
-                  final index = sortedListOfCountryModels.indexOf(listEntry);
-                  ref.read(outerPageIndexProvider.notifier).state = index;
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => AgroMallTaskFullCountryDetailScreen(
-                        indexOfTappedCountry: index,
-                      )
-                    )
-                  );
-                },
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  listEntry.name,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                onTap: () => ref.read(countriesDataStateProvider.notifier).displayFullDetailsOfATappedCountry(
+                  context: context,
+                  countryModel: listEntry
                 ),
+                
+                contentPadding: EdgeInsets.zero,
+                title: AgroMallTaskHomeScreenCountryListTileTitleWidget(countryModel: listEntry),
                 subtitle: Text(
                   listEntry.capital,
                   style: Theme.of(context).textTheme.bodyMedium

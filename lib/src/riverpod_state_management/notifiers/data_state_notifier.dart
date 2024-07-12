@@ -5,11 +5,14 @@ import 'package:country_api_task/src/riverpod_state_management/providers/inner_p
 import 'package:country_api_task/src/riverpod_state_management/providers/number_of_checkbox_ticks_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/outer_page_view_index_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/selected_check_box_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/textfield_search_string_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/services/api_service.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/utils/helpers/helper_functions.dart';
+import 'package:country_api_task/src/views/screens/full_country_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -119,6 +122,8 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
         state = AgroMallTaskDataState.hasData(data: _cachedCountryModels);
       }
     }
+
+    ref.read(textfieldSearchStringsProvider.notifier).state = searchKey.toLowerCase();
   }
 
 
@@ -217,6 +222,25 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
     );
 
     return sortedCountriesWithTheirInitialAlphabets;
+  }
+
+
+  void displayFullDetailsOfATappedCountry({
+    required BuildContext context,
+    required AgroMallTaskCountryModel countryModel
+  }){
+    final sortedListOfCountryModels = getSortedListOfCountryModels();
+    final index = sortedListOfCountryModels.indexOf(countryModel);
+    ref.read(outerPageIndexProvider.notifier).state = index;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AgroMallTaskFullCountryDetailScreen(
+          indexOfTappedCountry: index,
+        )
+      )
+    );
   }
   
 }
