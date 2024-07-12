@@ -21,7 +21,6 @@ class AgroMallTaskHomepageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context,) {
     
-
     return AgroMallTaskAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AppBar(

@@ -108,24 +108,18 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
     //ensure that there is data before accessing it for filtering
     //state.data is used instead of cachedCountryModels for the check to ensure 
     // that filtering can only occure when the application is in its data state
-    if(state.data?.isNotEmpty ?? false){
+    if((state.data?.isNotEmpty ?? false) || searchKey.isNotEmpty){
       state = AgroMallTaskDataState.isLoading();
 
-      if(searchKey.isNotEmpty){
-        final searchResult = _cachedCountryModels.where(
-          (country) => country.name.toLowerCase().contains(searchKey.toLowerCase())
-        ).toList();
+      final searchResult = _cachedCountryModels.where(
+        (country) => country.name.toLowerCase().contains(searchKey.toLowerCase())
+      ).toList();
 
-        if(searchResult.isEmpty){
-          state = AgroMallTaskDataState.hasError(error: AgroMallTaskStrings.noMatchesFound);
-        }
-        else{
-          state = AgroMallTaskDataState.hasData(data: searchResult);
-        }
+      if(searchResult.isEmpty){
+        state = AgroMallTaskDataState.hasError(error: AgroMallTaskStrings.noMatchesFound);
       }
-
       else{
-        state = AgroMallTaskDataState.hasData(data: _cachedCountryModels);
+        state = AgroMallTaskDataState.hasData(data: searchResult);
       }
     }
 

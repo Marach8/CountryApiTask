@@ -1,4 +1,5 @@
 import 'package:country_api_task/src/views/widgets/custom_widgets/annotated_region.dart';
+import 'package:country_api_task/src/views/widgets/custom_widgets/asset_svg_display_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,6 +25,14 @@ void main(){
         (tester) async{
           await tester.pumpWidget(testWidget!);
           expect(find.byType(AgroMallTaskAnnotatedRegionWidget), findsOneWidget);
+        }
+      );
+
+      testWidgets(
+        'renders the svg display widgets region widget',
+        (tester) async{
+          await tester.pumpWidget(testWidget!);
+          expect(find.byType(AgroMallTaskAssetSvgDisplayWidget), findsWidgets);
         }
       );
     }
