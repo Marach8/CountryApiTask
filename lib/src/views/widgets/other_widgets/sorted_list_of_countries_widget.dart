@@ -34,7 +34,7 @@ class AgroMallTaskHomeWidget extends ConsumerWidget {
       }
     }
 
-    final generalMap = ref.watch(countriesDataStateProvider.notifier).sortCountriesWithTheirInitialAlphabets();
+    final generalMap = ref.watch(countriesDataStateProvider.notifier).sortedCountriesWithTheirInitialAlphabets();
 
     return ListView.builder(
       itemCount: generalMap.length,

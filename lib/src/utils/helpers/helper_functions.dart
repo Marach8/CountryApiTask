@@ -1,3 +1,4 @@
+import 'package:country_api_task/src/models/country_data_model.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -75,5 +76,58 @@ class AgroMallTaskHelperFunctions{
     }
 
     return listOfLists;
+  }
+
+
+  static Map<String, List<AgroMallTaskCountryModel>> sortCountriesAccordingToTheirInitialAlphabets({
+    required List<AgroMallTaskCountryModel> listOfCountriesToSort
+  }){
+    Map<String, List<AgroMallTaskCountryModel>> generalMap = {};
+    List<String> listOfInitialAlphabets = [];
+
+    for(AgroMallTaskCountryModel countryModel in listOfCountriesToSort){
+      final initialAlphabet = countryModel.name.split(AgroMallTaskStrings.emptyString).first.toLowerCase();
+      if(!listOfInitialAlphabets.contains(initialAlphabet)){
+        listOfInitialAlphabets.add(initialAlphabet);
+      }
+    }
+
+    for(AgroMallTaskCountryModel countryModel in listOfCountriesToSort){
+      final initialAlphabet = countryModel.name.split(AgroMallTaskStrings.emptyString).first.toLowerCase();
+      if(!generalMap.containsKey(initialAlphabet)){
+        generalMap[initialAlphabet] = [];
+        generalMap[initialAlphabet]?.add(countryModel);
+      }
+      else{
+        generalMap[initialAlphabet]?.add(countryModel);
+      }
+    }
+
+    return generalMap;
+  }
+
+
+  static List<AgroMallTaskCountryModel> filterCountriesAccordingToContinentsAndOrTimezones({
+    required List<String> listOfContinentsForFiltering,
+    required List<String> listOfTimezonesForFiltering,
+    required List<AgroMallTaskCountryModel> listOfCountriesToBeFiltered
+  }){
+    final matchingCountryModels = listOfCountriesToBeFiltered.where(
+      (countryModel){
+        final continent = countryModel.continent;
+        final listOfTimezones = countryModel.timezones.split(AgroMallTaskStrings.comma);
+
+        final timezoneIsInSelectedTimeZones = AgroMallTaskHelperFunctions.checkForCommonElementInTwoLists(
+          list1: listOfTimezonesForFiltering, 
+          list2: listOfTimezones
+        );
+
+        final continentIsInSelectedContinents = listOfContinentsForFiltering.contains(continent);
+
+        return continentIsInSelectedContinents || timezoneIsInSelectedTimeZones;
+      }
+    ).toList();
+
+    return matchingCountryModels;
   }
 }

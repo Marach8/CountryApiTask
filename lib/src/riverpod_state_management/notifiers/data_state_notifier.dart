@@ -64,27 +64,18 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
     ).toList();
 
     //get all the countries that match either the checked continent tiles(if any) or timezone tiles(if any)
-    final matchingCountryModels = _cachedCountryModels.where(
-      (countryModel){
-        final continent = countryModel.continent;
-        final listOfTimezones = countryModel.timezones.split(AgroMallTaskStrings.comma);
-
-        final timezoneIsInSelectedTimeZones = AgroMallTaskHelperFunctions.checkForCommonElementInTwoLists(
-          list1: listOfCheckedTimezoneTiles, 
-          list2: listOfTimezones
-        );
-
-        final continentIsInSelectedContinents = listOfCheckedContinentTiles.contains(continent);
-
-        return continentIsInSelectedContinents || timezoneIsInSelectedTimeZones;
-      }
-    ).toList();
+    
+    final matchingCountryModels = AgroMallTaskHelperFunctions.filterCountriesAccordingToContinentsAndOrTimezones(
+      listOfContinentsForFiltering: listOfCheckedContinentTiles,
+      listOfTimezonesForFiltering: listOfCheckedTimezoneTiles,
+      listOfCountriesToBeFiltered: _cachedCountryModels
+    );
 
     //inject this matching countries into the state
     state = AgroMallTaskDataState.hasData(data: matchingCountryModels);
 
     //ensure the checked boxes are unchecked after the process
-    unselectAllCheckboxes();
+    // unselectAllCheckboxes();
   }
 
 
@@ -218,31 +209,14 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
   }
 
 
-  Map<String, List<AgroMallTaskCountryModel>> sortCountriesWithTheirInitialAlphabets(){
+  Map<String, List<AgroMallTaskCountryModel>> sortedCountriesWithTheirInitialAlphabets(){
     final sortedListOfCountryModels = getSortedListOfCountryModels();
     
-    Map<String, List<AgroMallTaskCountryModel>> generalMap = {};
-    List<String> listOfInitialAlphabets = [];
+    final sortedCountriesWithTheirInitialAlphabets = AgroMallTaskHelperFunctions.sortCountriesAccordingToTheirInitialAlphabets(
+      listOfCountriesToSort: sortedListOfCountryModels
+    );
 
-    for(AgroMallTaskCountryModel countryModel in sortedListOfCountryModels){
-      final initialAlphabet = countryModel.name.split(AgroMallTaskStrings.emptyString).first.toLowerCase();
-      if(!listOfInitialAlphabets.contains(initialAlphabet)){
-        listOfInitialAlphabets.add(initialAlphabet);
-      }
-    }
-
-    for(AgroMallTaskCountryModel countryModel in sortedListOfCountryModels){
-      final initialAlphabet = countryModel.name.split(AgroMallTaskStrings.emptyString).first.toLowerCase();
-      if(!generalMap.containsKey(initialAlphabet)){
-        generalMap[initialAlphabet] = [];
-        generalMap[initialAlphabet]?.add(countryModel);
-      }
-      else{
-        generalMap[initialAlphabet]?.add(countryModel);
-      }
-    }
-
-    return generalMap;
+    return sortedCountriesWithTheirInitialAlphabets;
   }
   
 }
