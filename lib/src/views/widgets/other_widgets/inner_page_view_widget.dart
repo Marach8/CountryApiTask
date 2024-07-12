@@ -1,9 +1,8 @@
 import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_view_index_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_controller_provider.dart';
-import 'package:country_api_task/src/utils/constants/colors.dart';
-import 'package:country_api_task/src/utils/constants/font_weights.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/country_flag_display_widget.dart';
+import 'package:country_api_task/src/views/widgets/custom_widgets/image_loading_error_widget.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,36 +43,24 @@ class AgroMallTaskInnerPageViewWidget extends StatelessWidget {
                   );
                 }
                 else if(url == AgroMallTaskStrings.dataNotAvailable){
-                  return Center(
-                    child: Text(
-                      url,
-                      maxLines: null,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: AgroMallTaskColors.warningColor,
-                        fontWeight: AgroMallTaskFontWeights.bold
-                      ),
-                    ),
-                  );
+                  return const AgroMallTaskImageLoadingErrorWidget();
                 }
                 else {
-                  return Image.network(
-                    url,  
-                    alignment: Alignment.center,
-                    loadingBuilder: (_, __, ___) => ClipRRect(
-                      clipBehavior: Clip.hardEdge,
-                      borderRadius: BorderRadius.circular(8),
-                      child: const AgroMallTaskShimmerWidget()
-                    ),
-                    errorBuilder: (_, __, ___) => Center(
-                      child: Text(
-                        AgroMallTaskStrings.couldNotLoadImage,
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: AgroMallTaskColors.warningColor,
-                          fontWeight: AgroMallTaskFontWeights.heavy
-                        ),
-                      )
-                    ),
-                  );
+                  try{
+                    return Image.network(
+                      url,  
+                      alignment: Alignment.center,
+                      loadingBuilder: (_, __, ___) => ClipRRect(
+                        clipBehavior: Clip.hardEdge,
+                        borderRadius: BorderRadius.circular(8),
+                        child: const AgroMallTaskShimmerWidget()
+                      ),
+                      errorBuilder: (_, __, ___) => const AgroMallTaskImageLoadingErrorWidget()
+                    );
+                  }
+                  catch(_){
+                    return const AgroMallTaskImageLoadingErrorWidget();
+                  }       
                 }
               }
             ).toList(),

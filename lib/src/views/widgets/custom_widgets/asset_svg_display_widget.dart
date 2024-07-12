@@ -1,7 +1,7 @@
-import 'package:country_api_task/src/utils/constants/colors.dart';
+import 'package:country_api_task/src/views/widgets/custom_widgets/image_loading_error_widget.dart';
+import 'package:country_api_task/src/views/widgets/custom_widgets/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shimmer/shimmer.dart';
 
 class AgroMallTaskAssetSvgDisplayWidget extends StatelessWidget {
   final String svgPath;
@@ -15,17 +15,15 @@ class AgroMallTaskAssetSvgDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      svgPath,
-      placeholderBuilder: (_) => Center(
-        child: Shimmer.fromColors(
-          baseColor: AgroMallTaskColors.darkThemeGray300Color,
-          highlightColor: AgroMallTaskColors.lightThemeGrey500Color,
-          child: Container(
-            color: AgroMallTaskColors.lightThemeBgColor
-          ),
+    try{
+      return SvgPicture.asset(
+        svgPath,
+        placeholderBuilder: (_) => const Center(
+          child: AgroMallTaskShimmerWidget()
         ),
-      ),
-    );
+      );
+    } catch(e){
+      return const AgroMallTaskImageLoadingErrorWidget();
+    }
   }
 }

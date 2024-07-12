@@ -1,3 +1,5 @@
+import 'package:country_api_task/src/utils/constants/strings.dart';
+import 'package:country_api_task/src/views/widgets/custom_widgets/image_loading_error_widget.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,16 +19,21 @@ class AgroMallTaskCountryFlagDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-      height: height,
-      width: width,
-      child: SvgPicture.network(
-        flagUrl,
-        fit: fit,
-        placeholderBuilder: (_) => const AgroMallTaskShimmerWidget(),
-      ),
-    );
+    try{
+      return Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+        height: height,
+        width: width,
+        child: SvgPicture.network(
+          flagUrl,
+          fit: fit,
+          placeholderBuilder: (_) => const AgroMallTaskShimmerWidget(),
+        ),
+      );
+    }
+    catch (_){
+      return const AgroMallTaskImageLoadingErrorWidget(errorText: AgroMallTaskStrings.emptyString);
+    }
   }
 }
