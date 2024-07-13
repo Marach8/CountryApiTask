@@ -11,7 +11,7 @@ class AgroMallTaskColors{
   static Color get darkThemePageViewButtonsBgColor => const Color.fromRGBO(242, 244, 247, 0.3);
   static Color get darkThemeFilterButtonBgColor => const Color.fromRGBO(0, 15, 36, 1);
 
-  static Color get gray400Color => const Color.fromRGBO(152, 162, 179, 1);
+  static Color get grey400Color => const Color.fromRGBO(152, 162, 179, 1);
   static Color get grey100Color => const Color.fromRGBO(242, 244, 247, 1);
   static Color get filterButtonBorderColor => const Color.fromRGBO(169, 184, 212, 1);
   static Color get filterButtonShadowColor => const Color.fromRGBO(16, 24, 40, 0.05);

@@ -6,6 +6,7 @@ import 'package:country_api_task/src/utils/themes/widget_themes/elevated_button_
 import 'package:country_api_task/src/utils/themes/widget_themes/expansion_tile_theme.dart';
 import 'package:country_api_task/src/utils/themes/widget_themes/icon_theme.dart';
 import 'package:country_api_task/src/utils/themes/widget_themes/input_decoration_theme.dart';
+import 'package:country_api_task/src/utils/themes/widget_themes/popup_menu_theme.dart';
 import 'package:country_api_task/src/utils/themes/widget_themes/progress_indicator_theme.dart';
 import 'package:country_api_task/src/utils/themes/widget_themes/snack_bar_theme.dart';
 import 'package:country_api_task/src/utils/themes/widget_themes/text_theme.dart';
@@ -27,6 +28,7 @@ class AgroMallTaskAppThemeData{
     appBarTheme: AgroMallTaskAppBarTheme.lightAppBarTheme,
     checkboxTheme: AgroMallTaskCheckBoxTheme.lightCheckBoxTheme,
     snackBarTheme: AgroMallTaskSnackBarTheme.lightSnackBarTheme,
+    popupMenuTheme: AgroMallTaskPopupMenuTheme.lightPopupMenuTheme,
     inputDecorationTheme: AgroMallTaskInputDecorationTheme.lightInputDecorationTheme,
   );
 
@@ -40,6 +42,7 @@ class AgroMallTaskAppThemeData{
     scaffoldBackgroundColor: AgroMallTaskColors.darkThemeBgColor,
     expansionTileTheme: AgroMallTaskExpansionTileTheme.darkExpansionTileTheme,
     textTheme: AgroMallTaskTextTheme.darkTextTheme,
+    popupMenuTheme: AgroMallTaskPopupMenuTheme.darkPopupMenuTheme,
     elevatedButtonTheme: AgroMallTaskElevatedButtonTheme.darkElevatedButtonTheme,
     appBarTheme: AgroMallTaskAppBarTheme.darkAppBarTheme,
     snackBarTheme: AgroMallTaskSnackBarTheme.darkSnackBarTheme,

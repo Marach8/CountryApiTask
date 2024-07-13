@@ -34,7 +34,7 @@ class AgroMallTaskInputDecorationTheme{
     prefixIconColor: AgroMallTaskColors.darkThemeGray200Color,
     activeIndicatorBorder: BorderSide.none,
     hintStyle: TextStyle(
-      color: AgroMallTaskColors.darkThemeGray200Color,
+      color: AgroMallTaskColors.grey400Color,
       fontSize: AgroMallTaskFontSizes.size16,
       fontWeight: AgroMallTaskFontWeights.regular,
       

@@ -42,9 +42,11 @@ class AgroMallTaskInnerPageViewWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                   );
                 }
+
                 else if(url == AgroMallTaskStrings.dataNotAvailable){
                   return const AgroMallTaskImageLoadingErrorWidget();
                 }
+                
                 else {
                   try{
                     return Image.network(

@@ -55,7 +55,7 @@ class AgroMallTaskTextTheme{
     ),
 
     bodyMedium : TextStyle(
-      color: AgroMallTaskColors.gray400Color,
+      color: AgroMallTaskColors.grey400Color,
       fontSize: AgroMallTaskFontSizes.size14,
       fontWeight: AgroMallTaskFontWeights.medium,
     ), 

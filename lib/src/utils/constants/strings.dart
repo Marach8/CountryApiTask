@@ -14,7 +14,7 @@ class AgroMallTaskStrings{
   static const reset = 'Reset';
   static const showResults = 'Show results';
   static const continent = 'Continent';
-  static const searchCountry = 'Search country';
+  static const search = 'Search ';
   static const timezone = 'Timezone';
   static const emptyString = '';
   static const colon = ':';

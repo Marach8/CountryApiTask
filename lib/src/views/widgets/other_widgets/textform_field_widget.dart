@@ -1,9 +1,10 @@
 import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/hint_text_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/snack_bar_is_mounted_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/text_field_controller_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/utils/constants/colors.dart';
-import 'package:country_api_task/src/utils/constants/strings.dart';
+import 'package:country_api_task/src/views/widgets/other_widgets/country_or_capital_selection_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +15,7 @@ class AgroMallTaskTextFormField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentTheme = ref.watch(themeModeProvider);
     final controller = ref.watch(textfieldControllerProvider);
+    final hintText = ref.watch(hintTextProvider);
     final inDarkMode = currentTheme == ThemeMode.dark;
     final snackBarIsMounted = ref.watch(snackBarIsMountedProvider);
 
@@ -23,9 +25,10 @@ class AgroMallTaskTextFormField extends ConsumerWidget {
       cursorColor: inDarkMode ? AgroMallTaskColors.lightThemeBgColor : AgroMallTaskColors.lightThemeBlackColor,
       onChanged: (value) => ref.read(countriesDataStateProvider.notifier).filterCountriesBySearchKey(value),
       textAlign: TextAlign.center,
-      decoration: const InputDecoration(
-        hintText: AgroMallTaskStrings.searchCountry, 
-        prefixIcon: Icon(Icons.search, size: 25,),
+      decoration: InputDecoration(
+        hintText: hintText, 
+        prefixIcon: const Icon(Icons.search, size: 25,),
+        suffixIcon: const AgroMallTaskSearchTermSelectionDropDownWidget()
       ),
     );
   }

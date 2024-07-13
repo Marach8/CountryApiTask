@@ -11,20 +11,26 @@ class AgroMallTaskApiService{
   factory AgroMallTaskApiService() => _shared;
 
   Future<List<AgroMallTaskCountryModel>> fetchCountryModels() async{
-    final url = Uri.parse(AgroMallTaskStrings.baseUrl);
+    try{
+      final url = Uri.parse(AgroMallTaskStrings.baseUrl);
 
-    final response = await http.get(url);
-    if(response.statusCode == 200){
-      final List<dynamic> body = jsonDecode(response.body);
+      final response = await http.get(url);
+      if(response.statusCode == 200){
+        final List<dynamic> body = jsonDecode(response.body);
 
-      final countryModels = body.map(
-        (countryDataJson) {
-          return AgroMallTaskCountryModel.fromJson(json: countryDataJson);
-        }
-      ).toList();
-      return countryModels;
+        final countryModels = body.map(
+          (countryDataJson) {
+            return AgroMallTaskCountryModel.fromJson(json: countryDataJson);
+          }
+        ).toList();
+        return countryModels;
+      }
+      else{
+        throw AgroMallTaskStrings.couldNotFetchData;
+      }
     }
-    else{
+    catch (e){
+
       throw AgroMallTaskStrings.couldNotFetchData;
     }
   }

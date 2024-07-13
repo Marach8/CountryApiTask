@@ -1,0 +1,1 @@
+enum SearchQueryChoice{country, capital}
