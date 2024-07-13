@@ -1,6 +1,7 @@
 import 'package:country_api_task/src/riverpod_state_management/providers/countries_data_provider.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/country_flag_display_widget.dart';
+import 'package:country_api_task/src/views/widgets/custom_widgets/home_screen_country_listtile_subtitle_widget.dart';
 import 'package:country_api_task/src/views/widgets/custom_widgets/home_screen_country_listtile_title_widget.dart';
 import 'package:country_api_task/src/views/widgets/other_widgets/home_screen_on_network_error_widget.dart';
 import 'package:flutter/material.dart';
@@ -60,11 +61,8 @@ class AgroMallTaskHomeWidget extends ConsumerWidget {
                 ),
                 
                 contentPadding: EdgeInsets.zero,
-                title: AgroMallTaskHomeScreenCountryListTileTitleWidget(countryModel: listEntry),
-                subtitle: Text(
-                  listEntry.capital,
-                  style: Theme.of(context).textTheme.bodyMedium
-                ),
+                title: AgroMallTaskHomeScreenCountryListTileTitleWidget(nameOfCountry: listEntry.name),
+                subtitle: AgroMallTaskHomeScreenCountryListTileSubtitleWidget(capitalOfCountry: listEntry.capital),
                 leading: AgroMallTaskCountryFlagDisplayWidget(
                   flagUrl: listEntry.flag,
                   fit: BoxFit.cover,

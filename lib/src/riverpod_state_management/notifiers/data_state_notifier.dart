@@ -1,13 +1,16 @@
 import 'package:country_api_task/src/models/country_data_state_model.dart';
 import 'package:country_api_task/src/models/country_data_model.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/expansion_tile_state_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/hint_text_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/inner_page_controller_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/number_of_checkbox_ticks_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/outer_page_view_index_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/popup_button_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/selected_check_box_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/textfield_search_string_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/services/api_service.dart';
+import 'package:country_api_task/src/utils/constants/enums.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:country_api_task/src/utils/helpers/helper_functions.dart';
 import 'package:country_api_task/src/views/screens/full_country_detail_screen.dart';
@@ -98,16 +101,49 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
 
 
   void filterCountriesBySearchKey(String searchKey){
-    //ensure that there is data before accessing it for filtering
-    //state.data is used instead of cachedCountryModels for the check to ensure 
-    // that filtering can only occure when the application is in its data state
+    searchKey.isEmpty ? ref.read(enablePopupButtonProvider.notifier).state = true:
+    ref.read(enablePopupButtonProvider.notifier).state = false;
+    //ensure that there is data before accessing it for filtering.
+    //State.data is used instead of cachedCountryModels for the check to ensure 
+    //that filtering can only occure when the application is in its data state.
+    //If the state for some reasons has no data, check if the user has some inputed text already,
+    //then use it to perform the filter operation.
     if((state.data?.isNotEmpty ?? false) || searchKey.isNotEmpty){
       state = AgroMallTaskDataState.isLoading();
 
-      final searchResult = _cachedCountryModels.where(
-        (country) => country.name.toLowerCase().contains(searchKey.toLowerCase())
-      ).toList();
+      late List<AgroMallTaskCountryModel> searchResult;
+      //Get the current value of the hinttext that was on the textformfield before the user started typing
+      //and the strings 'country' and 'capital'.
+      final searchByCountryOrCapital = ref.read(hintTextProvider);
+      final countryString = SearchQueryChoice.country.name;
+      final capitalString = SearchQueryChoice.capital.name;
 
+      //Check if the hinttext contains 'country' or 'capital' and then filter accordingly.
+      if(searchByCountryOrCapital.contains(countryString)){
+        final result = _cachedCountryModels.where(
+          (country) => country.name.toLowerCase().contains(searchKey.toLowerCase())
+        ).toList();
+        searchResult = result;
+        //if the user is filtering by country, update the family member provider that holds the string
+        //for country filtering. This string will be used to highlight the alphabets that matches
+        //its characters in the filter result.
+        ref.read(textfieldSearchStringsProvider(countryString).notifier).state = searchKey.toLowerCase();
+      }
+
+      else if(searchByCountryOrCapital.contains(capitalString)){
+        final result = _cachedCountryModels.where(
+          (country) => country.capital.toLowerCase().contains(searchKey.toLowerCase())
+        ).toList();
+        searchResult = result;
+        //if the user is filtering by capital, update the family member provider that holds the string
+        //for capital filtering. This string will be used to highlight the alphabets that matches
+        //its characters in the filter result.
+        ref.read(textfieldSearchStringsProvider(capitalString).notifier).state = searchKey.toLowerCase();
+      }      
+
+      //Search Result can be empty if the search querry of the user does not match any of the data available
+      //either searching by countries or capital. In such case, tell the user that no matches where found.
+      //If however, there are matches, inject these matches into the state of the application.
       if(searchResult.isEmpty){
         state = AgroMallTaskDataState.hasError(error: AgroMallTaskStrings.noMatchesFound);
       }
@@ -116,13 +152,14 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
       }
     }
 
+    //Anytime the state of the application does not contain data, or there is no user input,
+    //check the cached data and if it is not empty, inject it into the state of the application.
     else{
       if(_cachedCountryModels.isNotEmpty){
         state = AgroMallTaskDataState.hasData(data: _cachedCountryModels);
       }
     }
-
-    ref.read(textfieldSearchStringsProvider.notifier).state = searchKey.toLowerCase();
+    
   }
 
 

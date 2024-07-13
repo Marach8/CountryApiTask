@@ -4,7 +4,7 @@ import 'package:country_api_task/src/riverpod_state_management/providers/snack_b
 import 'package:country_api_task/src/riverpod_state_management/providers/text_field_controller_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/theme_mode_provider.dart';
 import 'package:country_api_task/src/utils/constants/colors.dart';
-import 'package:country_api_task/src/views/widgets/other_widgets/country_or_capital_selection_dropdown.dart';
+import 'package:country_api_task/src/views/widgets/other_widgets/popup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,17 +1,19 @@
 import 'package:country_api_task/src/riverpod_state_management/providers/hint_text_provider.dart';
+import 'package:country_api_task/src/riverpod_state_management/providers/popup_button_provider.dart';
 import 'package:country_api_task/src/utils/constants/enums.dart';
 import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AgroMallTaskSearchTermSelectionDropDownWidget extends StatelessWidget {
+class AgroMallTaskSearchTermSelectionDropDownWidget extends ConsumerWidget {
   const AgroMallTaskSearchTermSelectionDropDownWidget({super.key,});
 
   @override
-  Widget build(BuildContext context) {
-    final ref = ProviderScope.containerOf(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final enablePopupButton = ref.watch(enablePopupButtonProvider);
 
     return PopupMenuButton<String>(
+      enabled: enablePopupButton,
       offset: const Offset(0, 50),
       onSelected: (selectedSearchChoice) 
         => ref.read(hintTextProvider.notifier).state = AgroMallTaskStrings.search + selectedSearchChoice,

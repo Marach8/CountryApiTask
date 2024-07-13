@@ -5,18 +5,18 @@ import 'package:country_api_task/src/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AgroMallTaskHomeScreenCountryListTileTitleWidget extends ConsumerWidget {
-  final String nameOfCountry;
+class AgroMallTaskHomeScreenCountryListTileSubtitleWidget extends ConsumerWidget {
+  final String capitalOfCountry;
 
-  const AgroMallTaskHomeScreenCountryListTileTitleWidget({
+  const AgroMallTaskHomeScreenCountryListTileSubtitleWidget({
     super.key,
-    required this.nameOfCountry
+    required this.capitalOfCountry
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchKeyWord = ref.watch(textfieldSearchStringsProvider(SearchQueryChoice.country.name));
-    final listOfStringsOfText = nameOfCountry.trim().split(AgroMallTaskStrings.emptyString);
+    final searchKeyWord = ref.watch(textfieldSearchStringsProvider(SearchQueryChoice.capital.name));
+    final listOfStringsOfText = capitalOfCountry.trim().split(AgroMallTaskStrings.emptyString);
 
     return Text.rich(
       TextSpan(
@@ -25,9 +25,9 @@ class AgroMallTaskHomeScreenCountryListTileTitleWidget extends ConsumerWidget {
             final shouldHighlightString = searchKeyWord.contains(stringOfText.toLowerCase());
             return TextSpan(
               text: stringOfText,
-              style: shouldHighlightString ? Theme.of(context).textTheme.headlineMedium?.copyWith(
+              style: shouldHighlightString ? Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: AgroMallTaskColors.lightThemeYellowButtonBgColor
-              ) : Theme.of(context).textTheme.headlineMedium                                  
+              ) : Theme.of(context).textTheme.bodyMedium                                  
             );
           }
         ).toList()
