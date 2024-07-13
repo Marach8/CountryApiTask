@@ -101,8 +101,9 @@ class AgroMallTaskDataStateNotifier extends StateNotifier<AgroMallTaskDataState>
 
 
   void filterCountriesBySearchKey(String searchKey){
-    searchKey.isEmpty ? ref.read(enablePopupButtonProvider.notifier).state = true:
-    ref.read(enablePopupButtonProvider.notifier).state = false;
+    //Disable or enable the suffix of the textfield
+    searchKey.isEmpty ? ref.read(popupControllerProvider.notifier).state = 0:
+    ref.read(popupControllerProvider.notifier).state = 2;
     //ensure that there is data before accessing it for filtering.
     //State.data is used instead of cachedCountryModels for the check to ensure 
     //that filtering can only occure when the application is in its data state.

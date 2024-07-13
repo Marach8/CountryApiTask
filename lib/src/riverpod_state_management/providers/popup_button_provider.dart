@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final enablePopupButtonProvider = StateProvider<bool>(
-  (_) => true
+final popupControllerProvider = StateProvider<int>(
+  (_) => 0
 );

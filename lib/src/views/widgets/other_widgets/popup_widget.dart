@@ -10,15 +10,19 @@ class AgroMallTaskSearchTermSelectionDropDownWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final enablePopupButton = ref.watch(enablePopupButtonProvider);
+    final popupController = ref.watch(popupControllerProvider);
 
     return PopupMenuButton<String>(
-      enabled: enablePopupButton,
+      enabled: popupController != 2,
+      onOpened: () => ref.read(popupControllerProvider.notifier).state = 1,
+      onCanceled: () => ref.read(popupControllerProvider.notifier).state = 0,
       offset: const Offset(0, 50),
-      onSelected: (selectedSearchChoice) 
-        => ref.read(hintTextProvider.notifier).state = AgroMallTaskStrings.search + selectedSearchChoice,
-      icon: const Icon(
-        Icons.keyboard_arrow_down_outlined,
+      onSelected: (selectedSearchChoice){
+        ref.read(hintTextProvider.notifier).state = AgroMallTaskStrings.search + selectedSearchChoice;
+        ref.read(popupControllerProvider.notifier).state = 0;
+      },
+      icon: Icon(
+        popupController != 1 ? Icons.keyboard_arrow_down_outlined : Icons.keyboard_arrow_up_outlined,
         size: 25,
       ),
       itemBuilder: (_) => SearchQueryChoice.values.map(
