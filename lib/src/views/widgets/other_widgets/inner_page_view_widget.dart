@@ -32,7 +32,7 @@ class AgroMallTaskInnerPageViewWidget extends StatelessWidget {
             //the innerPageIndexProvider of that particular country identified by its name
             onPageChanged: (index) => ref.read(innerPageIndexProvider(countryName).notifier).state = index,
             children: listOfCoatOfArmsAndMapsUrl.map(
-              (url){
+              (url) {
                 final imageFileExtension = url.split(AgroMallTaskStrings.dotString).last;
 
                 //Checks to ensure that a valid image url is fed into the widget that will load it.

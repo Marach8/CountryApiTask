@@ -53,7 +53,18 @@ class _AgroMallTaskFullCountryDetailScreenState extends State<AgroMallTaskFullCo
               final currentIndex = ref.watch(outerPageIndexProvider);
               final nameOfCountry = sortedCountryModels.elementAt(currentIndex).name;
               
-              return Text(nameOfCountry);
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 1500),
+                switchInCurve: Curves.ease,
+                switchOutCurve: Curves.ease,
+                transitionBuilder: (child, animation) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child
+                  );
+                },
+                child: Text(nameOfCountry, key: ValueKey(nameOfCountry)),
+              );
             }
           ),
         ),
