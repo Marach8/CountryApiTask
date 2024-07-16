@@ -20,15 +20,27 @@ class AgroMallTaskCountryFlagDisplayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     try{
-      return Container(
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-        height: height,
-        width: width,
-        child: SvgPicture.network(
-          flagUrl,
-          fit: fit,
-          placeholderBuilder: (_) => const AgroMallTaskShimmerWidget(),
+      return Hero(
+        tag: flagUrl,
+        createRectTween: (begin, end) {
+          return RectTween(begin: begin, end: end);
+        },
+        flightShuttleBuilder: (flightContext, animation, direction, fromContext, toContext) {
+          return ScaleTransition(
+            scale: animation.drive(Tween<double>(begin: 0.0, end: 1.0)),
+            child: fromContext.widget,
+          );
+        },
+        child: Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+          height: height,
+          width: width,
+          child: SvgPicture.network(
+            flagUrl,
+            fit: fit,
+            placeholderBuilder: (_) => const AgroMallTaskShimmerWidget(),
+          ),
         ),
       );
     }

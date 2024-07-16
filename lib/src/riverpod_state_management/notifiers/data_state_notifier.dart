@@ -1,4 +1,4 @@
-import 'package:country_api_task/src/models/country_data_state_model.dart';
+import 'package:country_api_task/src/models/application_data_state.dart';
 import 'package:country_api_task/src/models/country_data_model.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/expansion_tile_state_provider.dart';
 import 'package:country_api_task/src/riverpod_state_management/providers/hint_text_provider.dart';
